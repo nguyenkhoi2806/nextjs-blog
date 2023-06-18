@@ -6,8 +6,6 @@ import "@/styles/clean-blog.min.css";
 import Layout from "@/Layout";
 
 import type { AppProps } from "next/app";
-import { useEffect } from "react";
-import Head from "next/head";
 import Script from "next/script";
 
 export default function App({ Component, pageProps }: AppProps) {
