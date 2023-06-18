@@ -51,7 +51,7 @@ export const getStaticProps = async ({ params }: any) => {
     props: {
       blog: Data.find((blog) => (blog.slug = params.slug)),
     },
-    revalidate: 1,
+    revalidate: 5000,
   };
 };
 
