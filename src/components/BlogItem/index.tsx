@@ -1,17 +1,21 @@
-const BlogItem = () => {
+import Blog from "@/models/blog";
+import Link from "next/link";
+
+interface InterfaceBlog {
+  blog: Blog;
+}
+
+const BlogItem = (props: InterfaceBlog) => {
+  const { blog } = props;
   return (
     <div className="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <div className="post-preview">
-        <a href="post.html">
-          <h2 className="post-title">
-            Man must explore, and this is exploration at its greatest
-          </h2>
-          <h3 className="post-subtitle">
-            Problems look mighty small from 150 miles up
-          </h3>
-        </a>
+        <Link href={"/blog/" + blog.slug}>
+          <h2 className="post-title">{blog.title}</h2>
+          <h3 className="post-subtitle">{blog.introduce}</h3>
+        </Link>
         <p className="post-meta">
-          Posted by <a href="#">Start Bootstrap</a> on September 24, 2014
+          Posted by <a href="#">{blog.user.name}</a> on {blog.createdDate}
         </p>
       </div>
     </div>

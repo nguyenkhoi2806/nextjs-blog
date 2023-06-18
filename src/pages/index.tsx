@@ -3,10 +3,17 @@ import { Inter } from "next/font/google";
 import Head from "next/head";
 import HomeBg from "@/assets/img/home-bg.jpg";
 import BlogItem from "@/components/BlogItem";
+import Blog from "@/models/blog";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+interface HomeProps {
+  blogs: Blog[];
+}
+
+export default function Home(props: HomeProps) {
+  const { blogs } = props;
+
   return (
     <>
       <Head>
@@ -19,9 +26,21 @@ export default function Home() {
       />
       <div className="container">
         <div className="row">
-          <BlogItem />
+          {blogs.map((blog) => (
+            <BlogItem key={blog.title} blog={blog} />
+          ))}
         </div>
       </div>
     </>
   );
+}
+
+export async function getStaticProps() {
+  const res = await fetch("http://localhost:3000/api/blog");
+  const data = await res.json();
+  return {
+    props: {
+      blogs: data.data,
+    },
+  };
 }
