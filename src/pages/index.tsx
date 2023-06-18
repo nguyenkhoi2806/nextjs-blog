@@ -36,7 +36,7 @@ export default function Home(props: HomeProps) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   return {
     props: {
       blogs: Data,
