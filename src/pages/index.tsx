@@ -4,6 +4,7 @@ import Head from "next/head";
 import HomeBg from "@/assets/img/home-bg.jpg";
 import BlogItem from "@/components/BlogItem";
 import Blog from "@/models/blog";
+import Data from "./data.json";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,12 +37,9 @@ export default function Home(props: HomeProps) {
 }
 
 export async function getStaticProps() {
-  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-  const res = await fetch(baseUrl + "/blog");
-  const data = await res.json();
   return {
     props: {
-      blogs: data.data,
+      blogs: Data,
     },
   };
 }

@@ -2,8 +2,7 @@ import { useRouter } from "next/router";
 
 import Header from "@/components/Header";
 import Blog from "@/models/blog";
-
-const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+import Data from "../data.json";
 
 interface BlogDetailProps {
   blog: Blog;
@@ -39,10 +38,8 @@ const BlogDetail = (props: BlogDetailProps) => {
 };
 
 export async function getStaticPaths() {
-  const res = await fetch(baseUrl + "/blog");
-  const blogData = await res.json();
   return {
-    paths: blogData.data.map((blog: Blog) => ({
+    paths: Data.map((blog: Blog) => ({
       params: { slug: blog.slug },
     })),
     fallback: true,
@@ -50,11 +47,9 @@ export async function getStaticPaths() {
 }
 
 export const getStaticProps = async ({ params }: any) => {
-  const res = await fetch(baseUrl + "/blog/" + params.slug);
-  const data = await res.json();
   return {
     props: {
-      blog: data.blog,
+      blog: Data.find((blog) => (blog.slug = params.slug)),
     },
     revalidate: 1,
   };
