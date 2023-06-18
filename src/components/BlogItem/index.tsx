@@ -10,7 +10,7 @@ const BlogItem = (props: InterfaceBlog) => {
   return (
     <div className="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <div className="post-preview">
-        <Link href={"/blog/" + blog.slug}>
+        <Link href={"/blog/" + blog.slug} prefetch={false}>
           <h2 className="post-title">{blog.title}</h2>
           <h3 className="post-subtitle">{blog.introduce}</h3>
         </Link>
