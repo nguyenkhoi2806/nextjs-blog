@@ -14,9 +14,9 @@ const Nav = () => {
             <span className="sr-only">Toggle navigation</span>
             Menu <i className="fa fa-bars"></i>
           </button>
-          <a className="navbar-brand" href="index.html">
+          <Link href="/" className="navbar-brand">
             Start Bootstrap
-          </a>
+          </Link>
         </div>
 
         <div

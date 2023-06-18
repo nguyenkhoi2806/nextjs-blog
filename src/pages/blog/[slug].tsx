@@ -1,3 +1,5 @@
+import { useRouter } from "next/router";
+
 import Header from "@/components/Header";
 import Blog from "@/models/blog";
 
@@ -7,19 +9,25 @@ interface BlogDetailProps {
 
 const BlogDetail = (props: BlogDetailProps) => {
   const { blog } = props;
-  const image = require("@/assets/img/" + blog.image);
+  const router = useRouter();
 
-  if (!blog) {
-    return null;
+  if (router.isFallback) {
+    return <div>Loading...</div>;
   }
+
+  const image = require("@/assets/img/" + blog.image);
 
   return (
     <>
-      <Header text={blog.title} subText={blog.introduce} background={image} />
+      <Header
+        text={blog.title}
+        subText={blog.introduce}
+        background={image.default}
+      />
       <div className="container">
         <div className="row">
           <div
-            className="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"
+            className="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-justify"
             dangerouslySetInnerHTML={{ __html: blog.content }}
           />
         </div>
@@ -31,7 +39,6 @@ const BlogDetail = (props: BlogDetailProps) => {
 export async function getStaticPaths() {
   const res = await fetch("http://localhost:3000/api/blog");
   const blogData = await res.json();
-  console.log(blogData);
   return {
     paths: blogData.data.map((blog: Blog) => ({
       params: { slug: blog.slug },
@@ -47,6 +54,7 @@ export const getStaticProps = async ({ params }: any) => {
     props: {
       blog: data.blog,
     },
+    revalidate: 1,
   };
 };
 
