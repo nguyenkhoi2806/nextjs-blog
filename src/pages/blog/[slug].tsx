@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import Header from "@/components/Header";
 import Blog from "@/models/blog";
 
+const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 interface BlogDetailProps {
   blog: Blog;
 }
@@ -37,7 +39,7 @@ const BlogDetail = (props: BlogDetailProps) => {
 };
 
 export async function getStaticPaths() {
-  const res = await fetch("http://localhost:3000/api/blog");
+  const res = await fetch(baseUrl + "/blog");
   const blogData = await res.json();
   return {
     paths: blogData.data.map((blog: Blog) => ({
@@ -48,7 +50,7 @@ export async function getStaticPaths() {
 }
 
 export const getStaticProps = async ({ params }: any) => {
-  const res = await fetch("http://localhost:3000/api/blog/" + params.slug);
+  const res = await fetch(baseUrl + "/blog/" + params.slug);
   const data = await res.json();
   return {
     props: {
