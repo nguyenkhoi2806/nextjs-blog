@@ -49,9 +49,9 @@ export async function getStaticPaths() {
 export const getStaticProps = async ({ params }: any) => {
   return {
     props: {
-      blog: Data.find((blog) => (blog.slug = params.slug)),
+      blog: Data.find((blog) => blog.slug === params.slug),
     },
-    revalidate: 5000,
+    revalidate: 1,
   };
 };
 
